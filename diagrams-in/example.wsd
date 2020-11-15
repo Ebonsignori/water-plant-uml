@@ -1,0 +1,10 @@
+@startuml example
+actor client
+node a
+node b
+node d
+
+a -> b
+b -> client
+client -> d
+@enduml

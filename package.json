@@ -1,0 +1,11 @@
+{
+  "name": "plant-uml-water",
+  "version": "1.0.0",
+  "description": "VS Code & Docker workflow for PlantUML",
+  "scripts": {
+    "init": "docker run -d -p 8792:8080 --name plantuml-server plantuml/plantuml-server:jetty",
+    "start": "docker start plantuml-server",
+    "stop": "docker stop plantuml-server"
+  },
+  "license": "ISC"
+}
