@@ -1,11 +1,31 @@
 {
   "name": "plant-uml-water",
   "version": "1.0.0",
-  "description": "VS Code & Docker workflow for PlantUML",
+  "description": "Tool for live-reloading diagrams in PlantUML using default PlantUML server or local Docker server.",
+  "keywords": [
+    "plantuml",
+    "docker",
+    "live-reload",
+    "plantuml to image"
+  ],
+  "homepage": "https://github.com/Ebonsignori/plant-uml-water",
   "scripts": {
     "init": "docker run -d -p 8792:8080 --name plantuml-server plantuml/plantuml-server:jetty",
-    "start": "docker start plantuml-server",
-    "stop": "docker stop plantuml-server"
+    "start-server": "docker start plantuml-server",
+    "stop-server": "docker stop plantuml-server",
+    "live-reload": "node ./src/server.js",
+    "live-reload.local": "USE_LOCAL_SERVER=true node ./src/server.js",
+    "export": "node ./src/export.js",
+    "export.local": "USE_LOCAL_SERVER=true node ./src/export.js"
   },
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.0",
+    "livereload": "^0.9.1",
+    "plantuml-encoder": "^1.4.0",
+    "yargs": "^16.1.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.14.0"
+  }
 }
