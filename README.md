@@ -38,7 +38,7 @@ By default, the default PlantUML server [http://www.plantuml.com/plantuml](http:
 
 If you want to use a private live PlantUML server for rendering embeded Markdown images, pass the server URL using the `-r` or `--remote-server` options.
 
-For an example Markdown file generated from running an export on [example.puml](./examples/example.puml) can be found [here](https://github.com/Ebonsignori/plant-uml-water/blob/master/examples/example.md) or see the raw Markdown [here](https://raw.githubusercontent.com/Ebonsignori/plant-uml-water/master/examples/example.md).
+For an example Markdown file generated from running an export on [example.puml](https://github.com/Ebonsignori/plant-uml-water/blob/master/examples/example.puml) can be found [here](https://github.com/Ebonsignori/plant-uml-water/blob/master/examples/example.md) or see the raw Markdown [here](https://raw.githubusercontent.com/Ebonsignori/plant-uml-water/master/examples/example.md).
 
 ## Using a local Docker PlantUML server
 
