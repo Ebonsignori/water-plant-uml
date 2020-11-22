@@ -16,6 +16,7 @@ yargs(process.argv.slice(2))
       LIVE_RELOAD_PORT: args.livePort,
       USE_LOCAL_SERVER: args.local,
       LOCAL_SERVER_PORT: args.localPort,
+      OUTPUT_OVERRIDE: 'undefined',
     });
     require('./src/server');
   })
