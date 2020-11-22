@@ -31,8 +31,10 @@ yargs(process.argv.slice(2))
     return require('./src/export');
   })
   .example('$0 live example.puml -p 8085', 'Run live reload server on localhost:8085')
+  .example('$0 live example.puml -l -d 8675', 'Runs live reload server on localhost:8088 (default) using local PlantUML server on localhost:8675 to render images.')
   .example('$0 export example.puml', 'Exports example.puml to example.svg')
   .example('$0 export example.puml -t md', 'Exports example.puml as an embeded image in example.md')
+  .example('$0 export example.puml -o ~/Diagrams/example.txt', 'Exports example.puml as an ASCII txt diagram in ~/Diagrams/example.txt')
   .options({
     p: {
       alias: 'live-port',
@@ -45,7 +47,7 @@ yargs(process.argv.slice(2))
       alias: 'local',
       type: 'boolean',
       describe: 'Use local PlantUML server running on localhost:<live-port>',
-      nargs: 1,
+      nargs: 0,
       default: false,
     },
     'd': {

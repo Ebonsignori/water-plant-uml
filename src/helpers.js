@@ -8,10 +8,12 @@ const {
   FILE_NAME, // The name of the file in diagrams-in
   USE_LOCAL_SERVER = false, // Use local docker server. See # Using Local Server section of README.md 
   LOCAL_SERVER_PORT = '8792', // Local docker server port
-  OUTPUT_FILE_TYPE = 'svg', // Output file for export. Can be png, svg, or txt for ASCII diagram 
   REMOTE_PUML_SERVER = 'http://www.plantuml.com/plantuml', // Server used for rendering embeded Markdown images
   OUTPUT_OVERRIDE, // Output file path override
   SCRIPT_PATH,
+} = process.env;
+let {
+  OUTPUT_FILE_TYPE = 'svg', // Output file for export. Can be png, svg, or txt for ASCII diagram.
 } = process.env;
 
 // FILE_NAME must be path to .puml (plantUML) file 
@@ -20,22 +22,7 @@ if (!FILE_NAME) {
   process.exit(1);
 }
 
-// Output file used if generating a PlantUML image
-if (typeof OUTPUT_FILE_TYPE !== 'undefined' && !OUTPUT_FILES.includes(OUTPUT_FILE_TYPE.toLowerCase())) {
-  console.error(`Invalid OUTPUT_FILE, "${OUTPUT_FILE_TYPE}". Must be one of: ${OUTPUT_FILES}`);
-  process.exit(1);
-}
-const isMarkdown = OUTPUT_FILE_TYPE.toLowerCase() === 'md';
-
-// PlantUML Server for rending encoded plantUML. Defaults to official server
-let plantUmlServer = REMOTE_PUML_SERVER;
-if (USE_LOCAL_SERVER) {
-  if (isMarkdown) {
-    console.log('Using local server for Markdown export is not supported.');
-    process.exit(1);
-  }
-  plantUmlServer = `http://localhost:${LOCAL_SERVER_PORT}`;
-}
+let isMarkdown = OUTPUT_FILE_TYPE.toLowerCase() === 'md';
 
 // Get paths for uml diagram input (.puml) and image output (.svg, .png, .txt, .md)
 let inputPath = FILE_NAME;
@@ -52,11 +39,33 @@ let plantImgPath = path.join(SCRIPT_PATH, `${outputPath}.${OUTPUT_FILE_TYPE.toLo
 if (OUTPUT_OVERRIDE !== 'undefined') {
   plantImgPath = OUTPUT_OVERRIDE;
   const splitOutput = plantImgPath.split('.');
-  const outputExtension = splitOutput[splitOutput.length - 1];
-  if (!OUTPUT_FILES.includes(outputExtension.toLowerCase())) {
+  const outputExtension = splitOutput[splitOutput.length - 1].toLowerCase();
+  if (!OUTPUT_FILES.includes(outputExtension)) {
     plantImgPath += `.${OUTPUT_FILE_TYPE.toLowerCase()}`;
+  // When override has a valid extension that doesn't match passed output filetype, change output filetype to match that extension with a warning
+  } else if (OUTPUT_FILE_TYPE !== outputExtension) {
+    console.warn(`Output file type is ${OUTPUT_FILE_TYPE}, but changing to ${outputExtension} to match -o output override option.`);
+    OUTPUT_FILE_TYPE = outputExtension;
+    isMarkdown = OUTPUT_FILE_TYPE.toLowerCase() === 'md';
   }
 }
+
+// Output file used if generating a PlantUML image
+if (typeof OUTPUT_FILE_TYPE !== 'undefined' && !OUTPUT_FILES.includes(OUTPUT_FILE_TYPE.toLowerCase())) {
+  console.error(`Invalid OUTPUT_FILE, "${OUTPUT_FILE_TYPE}". Must be one of: ${OUTPUT_FILES}`);
+  process.exit(1);
+}
+
+// PlantUML Server for rending encoded plantUML. Defaults to official server
+let plantUmlServer = REMOTE_PUML_SERVER;
+if (USE_LOCAL_SERVER === 'true') {
+  if (isMarkdown) {
+    console.log('Using local server for Markdown export is not supported.');
+    process.exit(1);
+  }
+  plantUmlServer = `http://localhost:${LOCAL_SERVER_PORT}`;
+}
+
 
 // Verify that input exists before preceding.
 const plantUmlPath = path.join(SCRIPT_PATH, inputPath); 
@@ -79,7 +88,7 @@ function encodedDiagram() {
 } 
 
 function getImageUrl() {
-  return `${plantUmlServer}/svg/${encodedDiagram()}`;
+  return `${plantUmlServer}/${OUTPUT_FILE_TYPE}/${encodedDiagram()}`;
 }
 
 function buildHtmlPage() {
@@ -101,6 +110,7 @@ async function exportImage() {
   const writer = fs.createWriteStream(plantImgPath);
   // Write an embeded Markdown image to Markdown file.
   if (OUTPUT_FILE_TYPE.toLowerCase() == 'md') {
+    OUTPUT_FILE_TYPE = 'svg';
     writer.write(`![${FILE_NAME} Diagram](${getImageUrl()})`, 'utf8');
     writer.end();
   // Write an image file
