@@ -66,7 +66,7 @@ yargs(process.argv.slice(2))
     'r': {
       alias: 'remote-server',
       type: 'string',
-      describe: 'Server used for rendering embeded markdown images',
+      describe: 'Server used for rendering embeded Markdown images',
       nargs: 1,
       default: 'http://www.plantuml.com/plantuml',
     },

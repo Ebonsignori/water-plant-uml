@@ -18,7 +18,7 @@ Options:
   -d, --local-port     Port local PlantUML server is running on                              [string] [default: 8792]
   -f, --file-type      Output filetype of PlantUML diagram export
                                                        [string] [choices: "svg", "png", "txt", "md"] [default: "svg"]
-  -r, --remote-server  Server used for rendering embeded markdown images
+  -r, --remote-server  Server used for rendering embeded Markdown images
                                                                [string] [default: "http://www.plantuml.com/plantuml"]
   -o, --output         Output path of export. Defaults to diagrams-out/filename.<file-type>                  [string]
   -h, --help           Show help                                                                            [boolean]
@@ -32,16 +32,26 @@ Examples:
 
 ## Markdown
 
-When exporting to markdown, e.g. `water-uml export example.puml -f md`, a markdown file will be created with embeded image. e.g. `![filename](server/svg/encodedPlantUMLString)`.
+When exporting to Markdown, e.g. `water-uml export example.puml -f md`, a Markdown file will be created with embeded image. e.g. `![filename](server/svg/encodedPlantUMLString)`.
 
-By default, the default PlantUML server [http://www.plantuml.com/plantuml](http://www.plantuml.com/plantuml) is used to render the image, so you can include these in your public Markdown files.
+By default, the default PlantUML server [http://www.plantuml.com/plantuml](http://www.plantuml.com/plantuml) is used to render the image, so you can include these in your live Markdown files.
 
-If you want to use a private live PlantUML server for rendering embeded markdown images, pass the server URL using the `-r` or `--remote-server` options.
+If you want to use a private live PlantUML server for rendering embeded Markdown images, pass the server URL using the `-r` or `--remote-server` options.
 
-For an example markdown file generated from running an export on [example.puml](./examples/example.puml) can be found [here](./examples/example.md).
+For an example Markdown file generated from running an export on [example.puml](./examples/example.puml) can be found [here](https://github.com/Ebonsignori/plant-uml-water/blob/master/examples/example.md) or see the raw Markdown [here](https://raw.githubusercontent.com/Ebonsignori/plant-uml-water/master/examples/example.md).
 
-## Using local Docker PlantUML server
-The local PlantUML server runs in a Docker container and can be started using the following commands. 
+## Using a local Docker PlantUML server
+
+If you need to be offline or want to run a local server with custom options, you can spin up a PlantUML server in a Docker container. 
+
+Pass the `-l` flag to use a local PlantUML server running on port `8792` by default, or specify the PlantUML server's port with the `-d` flag.
+
+For example, to user a server running on `localhost:8675`,
+```
+water-uml export example.puml -l -d 8675
+```
+
+You can start a local PlantUML server on `localhost:8675` via Docker using the following:
 
 1. Create/Initialize PlantUML server container
 ```

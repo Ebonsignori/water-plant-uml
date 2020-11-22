@@ -9,7 +9,7 @@ const {
   USE_LOCAL_SERVER = false, // Use local docker server. See # Using Local Server section of README.md 
   LOCAL_SERVER_PORT = '8792', // Local docker server port
   OUTPUT_FILE_TYPE = 'svg', // Output file for export. Can be png, svg, or txt for ASCII diagram 
-  REMOTE_PUML_SERVER = 'http://www.plantuml.com/plantuml', // Server used for rendering embeded markdown images
+  REMOTE_PUML_SERVER = 'http://www.plantuml.com/plantuml', // Server used for rendering embeded Markdown images
   OUTPUT_OVERRIDE, // Output file path override
   SCRIPT_PATH,
 } = process.env;
@@ -31,7 +31,7 @@ const isMarkdown = OUTPUT_FILE_TYPE.toLowerCase() === 'md';
 let plantUmlServer = REMOTE_PUML_SERVER;
 if (USE_LOCAL_SERVER) {
   if (isMarkdown) {
-    console.log('Using local server for markdown export is not supported.');
+    console.log('Using local server for Markdown export is not supported.');
     process.exit(1);
   }
   plantUmlServer = `http://localhost:${LOCAL_SERVER_PORT}`;
@@ -90,7 +90,7 @@ function buildHtmlPage() {
 
 async function exportImage() {
   const writer = fs.createWriteStream(plantImgPath);
-  // Write an embeded markdown image to markdown file.
+  // Write an embeded Markdown image to Markdown file.
   if (OUTPUT_FILE_TYPE.toLowerCase() == 'md') {
     writer.write(`![${FILE_NAME} Diagram](${getImageUrl()})`, 'utf8');
     writer.end();
