@@ -4,7 +4,7 @@
   "bin": {
     "water-uml": "./water-uml.js"
   },
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "CLI tool for live-reloading and/or exporting PlantUML diagrams using the default PlantUML server or a local Docker server.",
   "keywords": [
     "PlantUML",
