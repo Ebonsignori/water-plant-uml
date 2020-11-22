@@ -5,7 +5,7 @@ const {
   OUTPUT_FILES,
 } = require('./src/constants');
 
-process.env.SCRIPT_PATH = __dirname;
+process.env.SCRIPT_PATH = process.cwd();
 
 yargs(process.argv.slice(2))
   .usage('Usage: $0 <command> <filename.puml> [options]')
