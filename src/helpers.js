@@ -37,20 +37,29 @@ if (USE_LOCAL_SERVER) {
   plantUmlServer = `http://localhost:${LOCAL_SERVER_PORT}`;
 }
 
-// Get diagram input and output paths
+// Get paths for uml diagram input (.puml) and image output (.svg, .png, .txt, .md)
 let inputPath = FILE_NAME;
 let outputPath = FILE_NAME;
 const splitInput = FILE_NAME.split('.');
+// Add extension to input if not passed, remove extension for output if passed
 if (!splitInput[splitInput.length - 1].includes('puml')) {
   inputPath += '.puml';
 } else {
   outputPath = outputPath.substring(0, outputPath.lastIndexOf('.'));
 }
+// Output path can be overridden, and if it is and doesn't have an accurate extension, add one
+let plantImgPath = path.join(SCRIPT_PATH, `${outputPath}.${OUTPUT_FILE_TYPE.toLowerCase()}`); 
 if (OUTPUT_OVERRIDE !== 'undefined') {
-  outputPath = OUTPUT_OVERRIDE;
+  plantImgPath = OUTPUT_OVERRIDE;
+  const splitOutput = plantImgPath.split('.');
+  const outputExtension = splitOutput[splitOutput.length - 1];
+  if (!OUTPUT_FILES.includes(outputExtension.toLowerCase())) {
+    plantImgPath += `.${OUTPUT_FILE_TYPE.toLowerCase()}`;
+  }
 }
+
+// Verify that input exists before preceding.
 const plantUmlPath = path.join(SCRIPT_PATH, inputPath); 
-const plantImgPath = path.join(SCRIPT_PATH, `${outputPath}.${OUTPUT_FILE_TYPE.toLowerCase()}`); 
 if (!fs.existsSync(plantUmlPath)) {
   console.error(`PlantUML file ${plantUmlPath} not found.`);
   process.exit(1);
