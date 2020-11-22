@@ -6,13 +6,18 @@ const {
   reloadPort,
 } = require('./helpers');
 
+const {
+  LIVE_RELOAD_PORT = '8088', // Port live-reload server can be accessed from in browser
+  SCRIPT_PATH,
+} = process.env;
+
 const liveReloadServer = livereload.createServer({
   applyImgLive: true,
   exts: ['puml'],
 }, () => {
-  console.log(`Live-reloading ${process.env.FILE_NAME} on http://localhost:${reloadPort}`);
+  console.log(`Live-reloading ${process.env.FILE_NAME} on http://localhost:${LIVE_RELOAD_PORT}`);
 });
-liveReloadServer.watch(diagramsInPath);
+liveReloadServer.watch(SCRIPT_PATH);
 
 const server = http.createServer((req, res) => {
   let html;
@@ -33,5 +38,5 @@ const server = http.createServer((req, res) => {
   res.end(html);
 });
 
-server.listen(reloadPort);
+server.listen(LIVE_RELOAD_PORT);
 

@@ -1,39 +1,56 @@
-# PlantUML Water :seedling::droplet: 
+# WaterUml :seedling::droplet: 
 
-Tools for live-reloading and exporting PlantUML digrams using default PlantUML server or local Docker server.
-
-## Prereqs
-
-1. Node.js
-2. Install deps with `npm i` or yarn. 
-3. Docker (optional- needed if you want to use a local PlantUML server)
+CLI tool for live-reloading and/or exporting PlantUML diagrams using the default PlantUML server or a local Docker server.
 
 ## Usage
+```
+Usage: water-uml.js <command> <filename.puml> [options]
 
-1. Create PlantUML diagram files with extension *filename*`.puml` in the [diagrams-in](./diagrams-in) directory.
-2. Run live server reload server passing the *filename* you created above, `FILE_NAME=filename npm run live-reload`.
-3. Access live reload server on [localhost:8088](http://localhost:8088).
-3. Export your *filename*`.puml` file to an svg in the [diagrams-out](./diagrams-out) dir with `FILE_NAME=filename npm run export`.
+Commands:
+  water-uml live    Start live reload server on <live-port> for filename.puml
+  water-uml export  Export filename.puml to filename.<file-type>
 
-## Options
-You can override the following env vars to configure the live-reload server
-```javascript
-const {
-  FILE_NAME, // The name of the file in diagrams-in
-  DIAGRAMS_IN_PATH = 'diagrams-in', // Path of .puml digrams relative to top-level repo directory
-  DIAGRAMS_OUT_PATH = 'diagrams-out', // Path where exported images are saved relative to top-level repo directory
-  USE_LOCAL_SERVER = false, // Use local docker server. See # Using Local Server section of README.md 
-  LOCAL_SERVER_PORT = '8792', // Local docker server port
-  OUTPUT_FILE = 'svg', // Output file for export. Can be png, svg, txt for ASCII diagram, or md for markdown embeded png 
-  LIVE_RELOAD_PORT = '8088', // Port live-reload server can be accessed from in browser
-} = process.env;
+Options:
+  -p, --live-port      Port live reload server should run on                                 [string] [default: 8088]
+  -l, --local          Use local PlantUML server running on localhost:<local-port>          [boolean] [default: false]
+  -d, --local-port     Port local PlantUML server is running on                              [string] [default: 8792]
+  -f, --file-type      Output filetype of PlantUML diagram export
+                                                       [string] [choices: "svg", "png", "txt", "md"] [default: "svg"]
+  -r, --remote-server  Server used for rendering embeded markdown images
+                                                               [string] [default: "http://www.plantuml.com/plantuml"]
+  -o, --output         Output path of export. Defaults to diagrams-out/filename.<file-type>                  [string]
+  -h, --help           Show help                                                                            [boolean]
+      --version        Show version number                                                                  [boolean]
+
+Examples:
+  water-uml live example.puml -p 8085  Run live reload server on localhost:8085
+  water-uml export example.puml        Exports example.puml to example.svg
+  water-uml export example.puml -t md  Exports example.puml as an embeded image in example.md
 ```
 
-### Using local server
-The local PlantUML server runs in a Docker container and can be controlled via the included `npm` commands. 
+## Markdown
 
-1. Create PlantUML server container with `npm run init`
-2. Stop the PlantUML server container with `npm run stop`
-3. Start stopped PlantUML server container with `npm start`
+When exporting to markdown, e.g. `water-uml export example.puml -f md`, a markdown file will be created with embeded image. e.g. `![filename](server/svg/encodedPlantUMLString)`.
 
+By default, the default PlantUML server [http://www.plantuml.com/plantuml](http://www.plantuml.com/plantuml) is used to render the image, so you can include these in your public Markdown files.
+
+If you want to use a private live PlantUML server for rendering embeded markdown images, pass the server URL using the `-r` or `--remote-server` options.
+
+For an example markdown file generated from running an export on [example.puml](./examples/example.puml) can be found [here](./examples/example.md).
+
+## Using local Docker PlantUML server
+The local PlantUML server runs in a Docker container and can be started using the following commands. 
+
+1. Create/Initialize PlantUML server container
+```
+docker run -d -p 8792:8080 --name plantuml-server plantuml/plantuml-server:jetty
+```
+2. Stop the PlantUML server container
+```
+docker stop plantuml-server
+```
+3. Start stopped PlantUML server container
+```
+docker start plantuml-server
+```
 

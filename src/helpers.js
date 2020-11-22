@@ -6,12 +6,12 @@ const { OUTPUT_FILES } = require('./constants');
 
 const {
   FILE_NAME, // The name of the file in diagrams-in
-  DIAGRAMS_IN_PATH = 'diagrams-in', // Path of .puml digrams relative to top-level repo directory
-  DIAGRAMS_OUT_PATH = 'diagrams-out', // Path where exported images are saved relative to top-level repo directory
   USE_LOCAL_SERVER = false, // Use local docker server. See # Using Local Server section of README.md 
   LOCAL_SERVER_PORT = '8792', // Local docker server port
-  OUTPUT_FILE = 'svg', // Output file for export. Can be png, svg, or txt for ASCII diagram 
-  LIVE_RELOAD_PORT = '8088', // Port live-reload server can be accessed from in browser
+  OUTPUT_FILE_TYPE = 'svg', // Output file for export. Can be png, svg, or txt for ASCII diagram 
+  REMOTE_PUML_SERVER = 'http://www.plantuml.com/plantuml', // Server used for rendering embeded markdown images
+  OUTPUT_OVERRIDE, // Output file path override
+  SCRIPT_PATH,
 } = process.env;
 
 // FILE_NAME must be path to .puml (plantUML) file 
@@ -21,14 +21,14 @@ if (!FILE_NAME) {
 }
 
 // Output file used if generating a PlantUML image
-if (typeof OUTPUT_FILE !== 'undefined' && !OUTPUT_FILES.includes(OUTPUT_FILE.toLowerCase())) {
-  console.error(`Invalid OUTPUT_FILE, "${OUTPUT_FILE}". Must be one of: ${OUTPUT_FILES}`);
+if (typeof OUTPUT_FILE_TYPE !== 'undefined' && !OUTPUT_FILES.includes(OUTPUT_FILE_TYPE.toLowerCase())) {
+  console.error(`Invalid OUTPUT_FILE, "${OUTPUT_FILE_TYPE}". Must be one of: ${OUTPUT_FILES}`);
   process.exit(1);
 }
-const isMarkdown = OUTPUT_FILE.toLowerCase() === 'md';
+const isMarkdown = OUTPUT_FILE_TYPE.toLowerCase() === 'md';
 
 // PlantUML Server for rending encoded plantUML. Defaults to official server
-let plantUmlServer = 'http://www.plantuml.com/plantuml';
+let plantUmlServer = REMOTE_PUML_SERVER;
 if (USE_LOCAL_SERVER) {
   if (isMarkdown) {
     console.log('Using local server for markdown export is not supported.');
@@ -38,10 +38,19 @@ if (USE_LOCAL_SERVER) {
 }
 
 // Get diagram input and output paths
-const diagramsInPath = path.join(__dirname, '..', DIAGRAMS_IN_PATH);
-const plantUmlPath = path.join(diagramsInPath, `${FILE_NAME.split('.')[0]}.puml`); 
-const diagramsOutPath = path.join(__dirname, '..', DIAGRAMS_OUT_PATH);
-const plantImgPath = path.join(diagramsOutPath, `${FILE_NAME.split('.')[0]}.${OUTPUT_FILE.toLowerCase()}`); 
+let inputPath = FILE_NAME;
+let outputPath = FILE_NAME;
+const splitInput = FILE_NAME.split('.');
+if (!splitInput[splitInput.length - 1].includes('puml')) {
+  inputPath += '.puml';
+} else {
+  outputPath = outputPath.substring(0, outputPath.lastIndexOf('.'));
+}
+if (OUTPUT_OVERRIDE !== 'undefined') {
+  outputPath = OUTPUT_OVERRIDE;
+}
+const plantUmlPath = path.join(SCRIPT_PATH, inputPath); 
+const plantImgPath = path.join(SCRIPT_PATH, `${outputPath}.${OUTPUT_FILE_TYPE.toLowerCase()}`); 
 if (!fs.existsSync(plantUmlPath)) {
   console.error(`PlantUML file ${plantUmlPath} not found.`);
   process.exit(1);
@@ -82,7 +91,7 @@ function buildHtmlPage() {
 async function exportImage() {
   const writer = fs.createWriteStream(plantImgPath);
   // Write an embeded markdown image to markdown file.
-  if (OUTPUT_FILE.toLowerCase() == 'md') {
+  if (OUTPUT_FILE_TYPE.toLowerCase() == 'md') {
     writer.write(`![${FILE_NAME} Diagram](${getImageUrl()})`, 'utf8');
     writer.end();
   // Write an image file
@@ -101,9 +110,6 @@ async function exportImage() {
 }
 
 module.exports = {
-  OUTPUT_FILES,
-  reloadPort: LIVE_RELOAD_PORT,
-  diagramsInPath,
   buildHtmlPage,
   exportImage,
   plantImgPath,
