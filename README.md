@@ -1,10 +1,10 @@
-# WaterUml :seedling::droplet: 
+# Water PlantUml :seedling::droplet: 
 
 CLI tool for live-reloading and/or exporting PlantUML diagrams using the default PlantUML server or a local Docker server.
 
 ## Usage
 ```
-Usage: water-uml.js <command> <filename.puml> [options]
+Usage: water-uml <command> <filename.puml> [options]
 
 Commands:
   water-uml live    Start live reload server on <live-port> for filename.puml
