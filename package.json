@@ -7,12 +7,12 @@
   "version": "1.0.2",
   "description": "CLI tool for live-reloading and/or exporting PlantUML diagrams using the default PlantUML server or a local Docker server.",
   "keywords": [
-    "plantuml",
-    "cli",
+    "PlantUML",
+    "CLI",
     "docker",
     "live-reload",
     "export",
-    "plantuml to image"
+    "PlantUML to image"
   ],
   "homepage": "https://github.com/Ebonsignori/plant-uml-water",
   "author": "Evan Bonsignori <evanabonsignori@gmail.com>",

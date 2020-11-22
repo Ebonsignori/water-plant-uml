@@ -8,6 +8,7 @@ const {
 process.env.SCRIPT_PATH = process.cwd();
 
 yargs(process.argv.slice(2))
+  .scriptName('water-uml')
   .usage('Usage: $0 <command> <filename.puml> [options]')
   .command('live', 'Start live reload server on <reload-port> for filename.puml', () => {}, (args) => {
     overwriteEnvs({

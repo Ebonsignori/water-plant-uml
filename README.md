@@ -1,5 +1,7 @@
 # Water PlantUml :seedling::droplet: 
 
+[![npm version](https://badge.fury.io/js/water-plant-uml.svg)](https://badge.fury.io/js/water-plant-uml)
+
 CLI tool for live-reloading and/or exporting PlantUML diagrams using the default PlantUML server or a local Docker server.
 
 ## Usage
