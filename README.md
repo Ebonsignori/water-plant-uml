@@ -9,25 +9,27 @@ CLI tool for live-reloading and/or exporting PlantUML diagrams using the default
 Usage: water-uml <command> <filename.puml> [options]
 
 Commands:
-  water-uml live    Start live reload server on <live-port> for filename.puml
+  water-uml live    Start live reload server on <reload-port> for filename.puml
   water-uml export  Export filename.puml to filename.<file-type>
 
 Options:
-  -p, --live-port      Port live reload server should run on                                 [string] [default: 8088]
-  -l, --local          Use local PlantUML server running on localhost:<local-port>          [boolean] [default: false]
-  -d, --local-port     Port local PlantUML server is running on                              [string] [default: 8792]
+  -p, --live-port      Port live reload server should run on                                    [string] [default: 8088]
+  -l, --local          Use local PlantUML server running on localhost:<live-port>             [boolean] [default: false]
+  -d, --local-port     Port local PlantUML server is running on                                 [string] [default: 8792]
   -f, --file-type      Output filetype of PlantUML diagram export
-                                                       [string] [choices: "svg", "png", "txt", "md"] [default: "svg"]
-  -r, --remote-server  Server used for rendering embeded Markdown images
-                                                               [string] [default: "http://www.plantuml.com/plantuml"]
-  -o, --output         Output path of export. Defaults to diagrams-out/filename.<file-type>                  [string]
-  -h, --help           Show help                                                                            [boolean]
-      --version        Show version number                                                                  [boolean]
+                                                          [string] [choices: "svg", "png", "txt", "md"] [default: "svg"]
+  -r, --remote-server  Server used for rendering images.          [string] [default: "http://www.plantuml.com/plantuml"]
+  -o, --output         Output path of export. Defaults to input-file-path.<file-type>                           [string]
+  -h, --help           Show help                                                                               [boolean]
+      --version        Show version number                                                                     [boolean]
 
 Examples:
-  water-uml live example.puml -p 8085  Run live reload server on localhost:8085
-  water-uml export example.puml        Exports example.puml to example.svg
-  water-uml export example.puml -t md  Exports example.puml as an embeded image in example.md
+  water-uml live example.puml -p 8085                      Run live reload server on localhost:8085
+  water-uml live example.puml -l -d 8675                   Runs live reload server on localhost:8088 (default) using
+                                                           local PlantUML server on localhost:8675 to render images.
+  water-uml export example.puml                            Exports example.puml to example.svg
+  water-uml export example.puml -t md                      Exports example.puml as an embeded image in example.md
+  water-uml export example.puml -o ~/Diagrams/example.txt  Exports example.puml as an ASCII txt diagram in
 ```
 
 ## Markdown
