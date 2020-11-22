@@ -4,9 +4,14 @@
 
 CLI tool for live-reloading and/or exporting PlantUML diagrams using the default PlantUML server or a local Docker server.
 
-Install globally via npm
+Install globally via npm with:
 ```
-npm i -g water-uml
+npm i -g plant-water-uml
+```
+
+Call from your CLI with:
+```
+water-uml live example.puml
 ```
 
 ## Usage

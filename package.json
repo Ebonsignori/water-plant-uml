@@ -25,7 +25,8 @@
     "live-reload.local": "USE_LOCAL_SERVER=true node ./src/server.js",
     "export": "node ./src/export.js",
     "export.local": "USE_LOCAL_SERVER=true node ./src/export.js",
-    "patch-release": "npm version patch && npm publish && git push --follow-tags"
+    "patch-release": "npm version patch && npm publish && git push --follow-tags",
+    "minor-release": "npm version minor && npm publish && git push --follow-tags"
   },
   "license": "ISC",
   "dependencies": {
