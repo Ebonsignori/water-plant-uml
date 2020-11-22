@@ -68,14 +68,14 @@ yargs(process.argv.slice(2))
     'r': {
       alias: 'remote-server',
       type: 'string',
-      describe: 'Server used for rendering embeded Markdown images',
+      describe: 'Server used for rendering images.',
       nargs: 1,
       default: 'http://www.plantuml.com/plantuml',
     },
     o: {
       alias: 'output',
       type: 'string',
-      describe: 'Output path of export. Defaults to diagrams-out/filename.<file-type>',
+      describe: 'Output path of export. Defaults to input-file-path.<file-type>',
       nargs: 1,
     },
   })
@@ -85,11 +85,16 @@ yargs(process.argv.slice(2))
   .version()
   // Check that command and .puml filename are passed
   .check((argv) => {
+    const commands = ['live', 'export'];
     const filePaths = argv._;
     if (filePaths.length < 1) {
-      throw new Error('Please specify command. "live" or "export"');
+      throw new Error('Please specify a valid command. "live" or "export"');
     } else if (filePaths.length < 2) {
-      throw new Error('Must pass PlantUML (.puml) file path.');
+      if (commands.includes(filePaths[0])) {
+        throw new Error('Please pass a PlantUML (.puml) file path.');
+      } else {
+        throw new Error('Please specify a valid command. "live" or "export"');
+      }
     } else {
       return true;
     }
