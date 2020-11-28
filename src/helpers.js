@@ -68,7 +68,10 @@ if (USE_LOCAL_SERVER === 'true') {
 
 
 // Verify that input exists before preceding.
-const plantUmlPath = path.join(SCRIPT_PATH, inputPath); 
+let plantUmlPath = inputPath;
+if (!path.isAbsolute(inputPath)) {
+  plantUmlPath = path.join(SCRIPT_PATH, inputPath); 
+}
 if (!fs.existsSync(plantUmlPath)) {
   console.error(`PlantUML file ${plantUmlPath} not found.`);
   process.exit(1);
@@ -131,6 +134,7 @@ async function exportImage() {
 module.exports = {
   buildHtmlPage,
   exportImage,
+  plantUmlPath,
   plantImgPath,
 };
 
