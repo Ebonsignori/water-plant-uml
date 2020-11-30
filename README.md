@@ -9,10 +9,17 @@ Install globally via npm with:
 npm i -g plant-water-uml
 ```
 
-Call from your CLI with:
+Begin live reloading a .puml file from your CLI with:
 ```
 water-uml live example.puml
 ```
+
+### Contents
+- [Example Files](https://github.com/Ebonsignori/plant-uml-water/tree/master/examples)
+- [Usage](#usage)
+- [Markdown](#markdown)
+- [Including .puml files with !include](#including-.puml-files)
+- [Using a local Docker PlantUML server](#using-a-local-docker-plantuml-server)
 
 ## Usage
 ```
@@ -51,6 +58,12 @@ By default, the default PlantUML server [http://www.plantuml.com/plantuml](http:
 If you want to use a private live PlantUML server for rendering embeded Markdown images, pass the server URL using the `-r` or `--remote-server` options.
 
 For an example Markdown file generated from running an export on [example.puml](https://github.com/Ebonsignori/plant-uml-water/blob/master/examples/example.puml) can be found [here](https://github.com/Ebonsignori/plant-uml-water/blob/master/examples/example.md) or see the raw Markdown [here](https://raw.githubusercontent.com/Ebonsignori/plant-uml-water/master/examples/example.md).
+
+## Including .puml files
+
+Including other `.puml` files inside a `.puml` file (and nested inclusions) is supported. Includes are parsed inline, allowing for includes to be rendered inside of markdown files via an encoded PlantUML string.
+
+See [example.puml](https://github.com/Ebonsignori/plant-uml-water/blob/master/examples/example.puml) to see an example of including [styles.puml](https://github.com/Ebonsignori/plant-uml-water/blob/master/examples/styles.puml) with the '!include' syntax.
 
 ## Using a local Docker PlantUML server
 

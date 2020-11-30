@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
-const plantUmlEncoder = require('plantuml-encoder');
+const plantUmlEncoder = require('./plantuml-encoder/encoder'); 
 const { OUTPUT_FILES } = require('./constants');
 
 const {
@@ -87,7 +87,7 @@ function encodedDiagram() {
     console.error(error);
     process.exit(1);
   }
-  return plantUmlEncoder.encode(diagramString);
+  return plantUmlEncoder(diagramString, path.dirname(plantUmlPath));
 } 
 
 function getImageUrl() {

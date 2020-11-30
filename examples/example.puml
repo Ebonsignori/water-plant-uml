@@ -1,10 +1,17 @@
 @startuml example
+
+' NOTE: Variables in include paths not supported by water-plant-uml
+!include ./styles.puml
+
+''' UML Entities '''
 actor actor
 node a
 node b
 node d
 
+''' UML Connections '''
 a -> b
 b -> actor
 actor -> d
+
 @enduml

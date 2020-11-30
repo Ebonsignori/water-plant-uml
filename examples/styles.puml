@@ -1,0 +1,29 @@
+' Colors
+!define COLOR_BLUE #92C4DD 
+!define COLOR_ITP_DARK_BLUE #211551
+!define COLOR_ITP_YELLOW #FFCD00
+
+skinparam backgroundcolor transparent
+
+skinparam defaultFontColor COLOR_DEFAULT_TEXT
+skinparam defaultFontName FONT_FIRA_MONO
+skinparam defaultFontSize 14
+skinParam defaultFontStyle plain
+
+skinparam dpi 90
+
+'Controls how lines are drawn in PlantUML
+'values: otho, polyline, splines (default)
+skinparam linetype ortho
+
+' UML Node styles
+skinparam actor {
+  BackgroundColor COLOR_ITP_YELLOW
+  BorderColor COLOR_ITP_DARK_BLUE
+}
+
+skinparam node {
+  BackgroundColor COLOR_BLUE
+  BorderColor COLOR_ITP_DARK_BLUE
+}
+

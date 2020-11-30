@@ -13,6 +13,7 @@ yargs(process.argv.slice(2))
   .command('live', 'Start live reload server on <reload-port> for filename.puml', () => {}, (args) => {
     overwriteEnvs({
       FILE_NAME: args._[1],
+      OUTPUT_FILE_TYPE: args.fileType,
       LIVE_RELOAD_PORT: args.livePort,
       USE_LOCAL_SERVER: args.local,
       LOCAL_SERVER_PORT: args.localPort,
