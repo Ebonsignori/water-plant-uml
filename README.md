@@ -18,7 +18,7 @@ water-uml live example.puml
 - [Example Files](https://github.com/Ebonsignori/plant-uml-water/tree/master/examples)
 - [Usage](#usage)
 - [Markdown](#markdown)
-- [Including .puml files with !include](#including-.puml-files)
+- [Including .puml files with !include](#including-puml-files)
 - [Using a local Docker PlantUML server](#using-a-local-docker-plantuml-server)
 
 ## Usage
