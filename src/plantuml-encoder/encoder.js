@@ -1,13 +1,13 @@
-const deflate = require('./deflate');
-const encode64 = require('./encode64');
 const fs = require('fs');
 const path = require('path');
+const zlib = require('zlib');
+const encode64 = require('./encode64');
 
 let includes = 0;
-const includeLimit = 25;
+const includeLimit = 100;
 
 function readFile (filename, currentPath) {
-  let basePath = process.cwd() 
+  let basePath = process.cwd();
   if (currentPath) {
     basePath = currentPath;
   }
@@ -16,8 +16,7 @@ function readFile (filename, currentPath) {
     filePath = path.join(basePath, filename);
   }
   if (!fs.existsSync(filePath)) {
-    console.warn(`File included in .puml, ${filePath} does not exist. Variable names in path not supported.`);
-    return '';
+    throw Error(`File included in .puml, ${filePath} does not exist. Variable names in path not supported.`);
   }
   // Resolve any nested includes
   const includedPuml = fs.readFileSync(filePath).toString();
@@ -35,12 +34,25 @@ function resolveIncludes(puml, currentPath) {
   const splitLines = puml.split(/\r?\n/);
   for (let i = 0; i < splitLines.length; i++) {
     const line = splitLines[i].replace(/^\s+/g, '');
-    if (line.startsWith('!include')) {
-      const filePath = line.substring(line.indexOf('!include') + 8, line.length).trim();
-      splitLines[i] = readFile(filePath, currentPath);
+    if (line.startsWith('!include ')) {
+      const filePath = line.substring(line.indexOf('!include ') + 9, line.length).trim();
+      // If filepath is in shape <foo/bar>, then it is a std library and should not be read from filesystem 
+      if (filePath.startsWith('<') && filePath.endsWith('>')) {
+        continue;
+      }
+      try {
+        const includeString = readFile(filePath, currentPath);
+        splitLines[i] = includeString;
+      } catch (error) {
+        console.warn(error.message);
+      }
     }
   }
   return splitLines.join('\n');
+}
+
+function deflate(data) {
+  return zlib.deflateRawSync(data, { level: 9 }).toString('binary');
 }
 
 module.exports = (puml, basepath) => {

@@ -30,7 +30,6 @@
   },
   "license": "ISC",
   "dependencies": {
-    "@anb0s/plantuml-encoder": "^1.5.1",
     "axios": "^0.21.0",
     "livereload": "^0.9.1",
     "yargs": "^16.1.1"

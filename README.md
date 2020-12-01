@@ -18,7 +18,7 @@ water-uml live example.puml
 - [Example Files](https://github.com/Ebonsignori/plant-uml-water/tree/master/examples)
 - [Usage](#usage)
 - [Markdown](#markdown)
-- [Including .puml files with !include](#including-puml-files)
+- [Including .puml files with !include](#including-files)
 - [Using a local Docker PlantUML server](#using-a-local-docker-plantuml-server)
 
 ## Usage
@@ -59,11 +59,13 @@ If you want to use a private live PlantUML server for rendering embeded Markdown
 
 [example.md](https://github.com/Ebonsignori/plant-uml-water/blob/master/examples/example.md) is an example Markdown file generated from running an export on [example.puml](https://github.com/Ebonsignori/plant-uml-water/blob/master/examples/example.puml). See the raw Markdown [here](https://raw.githubusercontent.com/Ebonsignori/plant-uml-water/master/examples/example.md).
 
-## Including .puml files
+## Including files
 
-Including other `.puml` files inside a `.puml` file (and nested inclusions) is supported. Includes are parsed inline, allowing for includes to be rendered inside of markdown files via an encoded PlantUML string.
+Including local `.puml` files inside a `.puml` file (e.g. `!include ../globals/styles.puml`), and including standard libraries (e.g. `!include <foo/bar>`) are supported by this CLI tool.
 
-See [example.puml](https://github.com/Ebonsignori/plant-uml-water/blob/master/examples/example.puml) to see an example of including [styles.puml](https://github.com/Ebonsignori/plant-uml-water/blob/master/examples/styles.puml) with the '!include' syntax.
+File includes are parsed inline, allowing for local file includes to be rendered inside of markdown files via an encoded PlantUML string, like the styles that persist in [example.md](https://github.com/Ebonsignori/plant-uml-water/blob/master/examples/example.md).
+
+See [example.puml](https://github.com/Ebonsignori/plant-uml-water/blob/master/examples/example.puml) to see an example of including [styles.puml](https://github.com/Ebonsignori/plant-uml-water/blob/master/examples/styles.puml) with the `!include` syntax.
 
 ## Using a local Docker PlantUML server
 
