@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.2 - 2021-12-09
+### Changed
+- Move changelog dep to dev dependencies
+
 ## 2.0.1 - 2021-12-09
 ### Changed
 - Change repo name to match package name and fix README links

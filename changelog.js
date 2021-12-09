@@ -7,6 +7,10 @@ const { Changelog, Release } = require('keep-a-changelog');
 */
 const changelog = new Changelog('water-plant-uml')
   .addRelease(
+    new Release('2.0.2', '2021-12-09')
+      .changed('Move changelog dep to dev dependencies')
+  )
+  .addRelease(
     new Release('2.0.1', '2021-12-09')
       .changed('Change repo name to match package name and fix README links')
   )
