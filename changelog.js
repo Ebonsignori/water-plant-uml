@@ -15,6 +15,7 @@ const changelog = new Changelog('plant-uml-water')
       .fixed('Breaking bug in -R that prevented use without including the argument')
       .fixed('Important README typo asking to install the wrong package')
       .added('Live reload now opens a browser tab by default. Behavior can be toggled with -O')
+      .added('Add a CHANGELOG!')
   );
 
 fs.writeFileSync(path.join(__dirname, './CHANGELOG.md'), changelog.toString());
