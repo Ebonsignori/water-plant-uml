@@ -7,7 +7,7 @@ CLI tool for live-reloading and/or exporting PlantUML diagrams using the default
 Install globally via npm with:
 
 ```
-npm i -g plant-water-uml
+npm i -g water-plant-uml
 ```
 
 Begin live reloading a .puml file from your CLI with:
