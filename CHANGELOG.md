@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 2.0.1 - 2021-12-09
 ### Changed
-- Fix README links
+- Change repo name to match package name and fix README links
 
 ## 2.0.0 - 2021-12-09
 ### Added
