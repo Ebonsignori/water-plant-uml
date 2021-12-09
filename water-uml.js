@@ -38,6 +38,9 @@ yargs(process.argv.slice(2))
     'Export filename.puml to filename.<file-type>',
     () => {},
     async (args) => {
+      if (!args.root) {
+        args.root = process.cwd();
+      }
       // Set yarg args to globals on process.env
       overwriteEnvs({
         FILE_NAME: args._[1],

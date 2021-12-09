@@ -1,0 +1,18 @@
+# plant-uml-water
+
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](http://keepachangelog.com/)
+and this project adheres to [Semantic Versioning](http://semver.org/).
+
+## 2.0.0 - 2021-12-09
+### Added
+- Live reload now opens a browser tab by default. Behavior can be toggled with -O
+
+### Fixed
+- Breaking bug in -R that prevented use without including the argument
+- Important README typo asking to install the wrong package
+
+## 1.4.0 - 2021-10-12
+### Added
+- Added a -R --root param so you can use include paths relative to root

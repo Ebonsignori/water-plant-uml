@@ -2,6 +2,8 @@
 
 [![npm version](https://badge.fury.io/js/water-plant-uml.svg)](https://badge.fury.io/js/water-plant-uml)
 
+[CHANGELOG](https://github.com/Ebonsignori/plant-uml-water/blob/main/CHANGELOG.md)
+
 CLI tool for live-reloading and/or exporting PlantUML diagrams using the default PlantUML server or a local Docker server.
 
 Install globally via npm with:
@@ -23,6 +25,7 @@ water-uml live example.puml
 - [Markdown](#markdown)
 - [Including .puml files with !include](#including-files)
 - [Using a local Docker PlantUML server](#using-a-local-docker-plantuml-server)
+- [Contributing and Bug Reporting :bug:](#contributing)
 
 ## Usage
 
@@ -40,9 +43,10 @@ Options:
   -f, --file-type      Output filetype of PlantUML diagram export
                                                           [string] [choices: "svg", "png", "txt", "md"] [default: "svg"]
   -r, --remote-server  Server used for rendering images.          [string] [default: "http://www.plantuml.com/plantuml"]
+  -o, --output         Output path of export. Defaults to input-file-path.<file-type>                           [string]
+  -O, --open           Automatically open a browser window in live-reload                       [string] [default: true]
   -R, --root           Root of your UML files. This allows you to include files from root
                                                           [string] [default: current working dir]
-  -o, --output         Output path of export. Defaults to input-file-path.<file-type>                           [string]
   -h, --help           Show help                                                                               [boolean]
       --version        Show version number                                                                     [boolean]
 
@@ -104,3 +108,15 @@ docker stop plantuml-server
 ```
 docker start plantuml-server
 ```
+
+## Contributing
+
+If you run into an issue, you can open one [here](https://github.com/Ebonsignori/plant-uml-water/issues).
+
+If there is a feature or bug you'd like to have fixed and I don't get to it in a timely manner, you're free to open a PR.
+
+The architecture of this app is a little weird. The entry point is [water-uml.js](./water-uml.js) where args passed via the CLI and are attached to the global `process.env`.
+
+When running live reload, e.g. `water-uml live examples/styles.puml`, the args are set and [src/server](./src/server.js) is the entry-point.
+
+When exporting, e.g. `water-uml export examples/styles.puml`, the args are set and [src/export](./src/export.js) is the entry-point.
