@@ -26,7 +26,9 @@
     "export": "node ./src/export.js",
     "export.local": "USE_LOCAL_SERVER=true node ./src/export.js",
     "patch-release": "npm version patch && npm publish && git push --follow-tags",
-    "minor-release": "npm version minor && npm publish && git push --follow-tags"
+    "minor-release": "npm version minor && npm publish && git push --follow-tags",
+    "lint": "eslint src/",
+    "lint.fix": "eslint src/ --fix"
   },
   "license": "ISC",
   "dependencies": {

@@ -1,7 +1,7 @@
-const fs = require("fs");
-const path = require("path");
-const zlib = require("zlib");
-const encode64 = require("./encode64");
+const fs = require('fs');
+const path = require('path');
+const zlib = require('zlib');
+const encode64 = require('./encode64');
 
 let includes = 0;
 const includeLimit = 100;
@@ -34,19 +34,19 @@ function resolveIncludes(puml, currentPath, root) {
   includes++;
   if (includes > includeLimit) {
     console.error(
-      "More than ${nestedLimit} includes found in puml. Not supported, though you can navigate to this code and hardcode to increase the limit."
+      'More than ${nestedLimit} includes found in puml. Not supported, though you can navigate to this code and hardcode to increase the limit.'
     );
     process.exit(1);
   }
   const splitLines = puml.split(/\r?\n/);
   for (let i = 0; i < splitLines.length; i++) {
-    const line = splitLines[i].replace(/^\s+/g, "");
-    if (line.startsWith("!include ")) {
+    const line = splitLines[i].replace(/^\s+/g, '');
+    if (line.startsWith('!include ')) {
       const filePath = line
-        .substring(line.indexOf("!include ") + 9, line.length)
+        .substring(line.indexOf('!include ') + 9, line.length)
         .trim();
       // If filepath is in shape <foo/bar>, then it is a std library and should not be read from filesystem
-      if (filePath.startsWith("<") && filePath.endsWith(">")) {
+      if (filePath.startsWith('<') && filePath.endsWith('>')) {
         continue;
       }
       try {
@@ -57,11 +57,11 @@ function resolveIncludes(puml, currentPath, root) {
       }
     }
   }
-  return splitLines.join("\n");
+  return splitLines.join('\n');
 }
 
 function deflate(data) {
-  return zlib.deflateRawSync(data, { level: 9 }).toString("binary");
+  return zlib.deflateRawSync(data, { level: 9 }).toString('binary');
 }
 
 module.exports = (puml, basepath, root) => {
