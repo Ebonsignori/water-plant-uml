@@ -43,11 +43,11 @@
   "dependencies": {
     "axios": "^0.21.0",
     "better-opn": "^3.0.1",
-    "keep-a-changelog": "^2.0.0",
     "livereload": "^0.9.1",
     "yargs": "^16.1.1"
   },
   "devDependencies": {
-    "eslint": "^7.14.0"
+    "eslint": "^7.14.0",
+    "keep-a-changelog": "^2.0.0"
   }
 }
