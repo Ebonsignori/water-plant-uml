@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## 2.0.0 - 2021-12-09
 ### Added
 - Live reload now opens a browser tab by default. Behavior can be toggled with -O
+- Add a CHANGELOG!
 
 ### Fixed
 - Breaking bug in -R that prevented use without including the argument
