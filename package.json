@@ -33,6 +33,7 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.21.0",
+    "better-opn": "^3.0.1",
     "livereload": "^0.9.1",
     "yargs": "^16.1.1"
   },

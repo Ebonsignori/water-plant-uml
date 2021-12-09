@@ -3,6 +3,7 @@ const livereload = require('livereload');
 const { 
   buildHtmlPage,
 } = require('./helpers');
+const opn = require('better-opn');
 
 const {
   LIVE_RELOAD_PORT = '8088', // Port live-reload server can be accessed from in browser
@@ -14,7 +15,11 @@ const liveReloadServer = livereload.createServer({
   applyImgLive: true,
   exts: ['puml'],
 }, () => {
-  console.log(`Live-reloading ${FILE_NAME} on http://localhost:${LIVE_RELOAD_PORT}`);
+  const liveUrl = `http://localhost:${LIVE_RELOAD_PORT}`;
+  console.log(`Live-reloading ${FILE_NAME} on ${liveUrl}`);
+  if (process.env.OPEN) {
+    opn(liveUrl);
+  }
 });
 liveReloadServer.watch(SCRIPT_PATH);
 

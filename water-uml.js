@@ -17,6 +17,7 @@ yargs(process.argv.slice(2))
       if (!args.root) {
         args.root = process.cwd();
       }
+      // Set yarg args to globals on process.env
       overwriteEnvs({
         FILE_NAME: args._[1],
         OUTPUT_FILE_TYPE: args.fileType,
@@ -24,6 +25,7 @@ yargs(process.argv.slice(2))
         USE_LOCAL_SERVER: args.local,
         LOCAL_SERVER_PORT: args.localPort,
         OUTPUT_OVERRIDE: 'undefined',
+        OPEN: args.open,
         ROOT: path.isAbsolute(args.root)
           ? args.root
           : path.join(process.cwd(), args.root),
@@ -36,6 +38,7 @@ yargs(process.argv.slice(2))
     'Export filename.puml to filename.<file-type>',
     () => {},
     async (args) => {
+      // Set yarg args to globals on process.env
       overwriteEnvs({
         FILE_NAME: args._[1],
         OUTPUT_FILE_TYPE: args.fileType,
@@ -111,6 +114,14 @@ yargs(process.argv.slice(2))
         'Output path of export. Defaults to input-file-path.<file-type>',
       nargs: 1,
     },
+    O: {
+      alias: 'open',
+      type: 'string',
+      describe:
+        'Automatically open a browser window in live-reload',
+      nargs: 1,
+      default: true,
+    },
     R: {
       alias: 'root',
       type: 'string',
@@ -139,6 +150,7 @@ yargs(process.argv.slice(2))
     }
   }).argv;
 
+// Apply yarg args to globals in process.env
 function overwriteEnvs(optMap) {
   Object.entries(optMap).forEach((entry) => {
     process.env[entry[0]] = entry[1];
