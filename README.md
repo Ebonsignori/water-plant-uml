@@ -20,7 +20,7 @@ water-uml live example.puml
 
 ### Contents
 
-- [Example Files](https://github.com/Ebonsignori/plant-uml-water/tree/master/examples)
+- [Example Files](https://github.com/Ebonsignori/water-plant-uml/tree/main/examples)
 - [Usage](#usage)
 - [Markdown](#markdown)
 - [Including .puml files with !include](#including-files)
@@ -67,15 +67,15 @@ By default, the default PlantUML server [http://www.plantuml.com/plantuml](http:
 
 If you want to use a private live PlantUML server for rendering embeded Markdown images, pass the server URL using the `-r` or `--remote-server` options.
 
-[example.md](https://github.com/Ebonsignori/plant-uml-water/blob/master/examples/example.md) is an example Markdown file generated from running an export on [example.puml](https://github.com/Ebonsignori/plant-uml-water/blob/master/examples/example.puml). See the raw Markdown [here](https://raw.githubusercontent.com/Ebonsignori/plant-uml-water/master/examples/example.md).
+[example.md](https://github.com/Ebonsignori/water-plant-uml/blob/main/examples/example.md) is an example Markdown file generated from running an export on [example.puml](https://github.com/Ebonsignori/water-plant-uml/blob/main/examples/example.puml). See the raw Markdown [here](https://github.com/Ebonsignori/water-plant-uml/blob/main/examples/example.md).
 
 ## Including files
 
 Including local `.puml` files inside a `.puml` file (e.g. `!include ../globals/styles.puml`), and including standard libraries (e.g. `!include <foo/bar>`) are supported by this CLI tool.
 
-File includes are parsed inline, allowing for local file includes to be rendered inside of markdown files via an encoded PlantUML string, like the styles that persist in [example.md](https://github.com/Ebonsignori/plant-uml-water/blob/master/examples/example.md).
+File includes are parsed inline, allowing for local file includes to be rendered inside of markdown files via an encoded PlantUML string, like the styles that persist in [example.md](https://github.com/Ebonsignori/water-plant-uml/blob/main/examples/example.md).
 
-See [example.puml](https://github.com/Ebonsignori/plant-uml-water/blob/master/examples/example.puml) to see an example of including [styles.puml](https://github.com/Ebonsignori/plant-uml-water/blob/master/examples/styles.puml) with the `!include` syntax.
+See [example.puml](https://github.com/Ebonsignori/water-plant-uml/blob/main/examples/example.puml) to see an example of including [styles.puml](https://github.com/Ebonsignori/water-plant-uml/blob/main/examples/styles.puml) with the `!include` syntax.
 
 ## Using a local Docker PlantUML server
 
@@ -115,7 +115,7 @@ If you run into an issue, you can open one [here](https://github.com/Ebonsignori
 
 If there is a feature or bug you'd like to have fixed and I don't get to it in a timely manner, you're free to open a PR.
 
-The architecture of this app is a little weird. The entry point is [water-uml.js](./water-uml.js) where args passed via the CLI and are attached to the global `process.env`.
+The architecture of this app relies heavily on globals. The entry point is [water-uml.js](./water-uml.js) where args passed via the CLI and are attached to the global `process.env`.
 
 When running live reload, e.g. `water-uml live examples/styles.puml`, the args are set and [src/server](./src/server.js) is the entry-point.
 
